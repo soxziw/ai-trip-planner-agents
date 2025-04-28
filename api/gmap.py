@@ -85,7 +85,8 @@ def get_directions(
         params["waypoints"] = "|".join(waypoints)
     
     return call_google_maps_api("directions/json", params, api_key)
-def search_nearby_places(
+
+def search_places(
     location: str,
     radius: int = 1500,
     type: Optional[str] = None,
@@ -117,6 +118,31 @@ def search_nearby_places(
         params["keyword"] = keyword
     
     return call_google_maps_api("place/nearbysearch/json", params, api_key)
+
+def get_place_details(
+    place_id: str,
+    fields: Optional[List[str]] = None,
+    api_key: Optional[str] = None
+) -> Dict[str, Any]:
+    """
+    Get detailed information about a specific place.
+    
+    Args:
+        place_id: The Google Place ID
+        fields: List of fields to include in the response
+        api_key: Google Maps API key (optional)
+        
+    Returns:
+        Detailed information about the place
+    """
+    params = {
+        "place_id": place_id
+    }
+    
+    if fields:
+        params["fields"] = ",".join(fields)
+    
+    return call_google_maps_api("place/details/json", params, api_key)
 
 def main():
     """
@@ -159,7 +185,7 @@ def main():
     # Test nearby places
     try:
         print("\nTesting Nearby Places:")
-        nearby_result = search_nearby_places(
+        nearby_result = search_places(
             location="37.7749,-122.4194",  # San Francisco coordinates
             radius=1000,
             type="restaurant",

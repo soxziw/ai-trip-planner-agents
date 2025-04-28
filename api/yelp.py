@@ -150,3 +150,52 @@ def display_businesses(data):
         print(f"Menu: {menu_url}")
         print(f"Image: {image_url}")
         print()
+
+if __name__ == "__main__":
+    import os
+    import json
+    from dotenv import load_dotenv
+    
+    # Load environment variables from .env file
+    load_dotenv()
+    
+    # Get API key from environment variables
+    api_key = os.getenv("YELP_API_KEY")
+    
+    if not api_key:
+        print("Error: YELP_API_KEY not found in environment variables")
+        exit(1)
+    
+    # Test search_yelp_business_restaurants function
+    print("Testing search_yelp_business_restaurants function:")
+    location = "San Francisco"
+    print(f"Searching for restaurants in {location}...")
+    results = search_yelp_business_restaurants(location=location, yelp_api_key=api_key)
+    if results:
+        display_businesses(results)
+    else:
+        print("No results found or an error occurred.")
+    
+    # Test search_yelp_fusion_restaurants function
+    print("\nTesting search_yelp_fusion_restaurants function:")
+    cuisine = "Italian"
+    location = "San Francisco"
+    print(f"Searching for {cuisine} restaurants in {location}...")
+    results = search_yelp_fusion_restaurants(food_category=cuisine, location=location, yelp_api_key=api_key)
+    if results:
+        formatted_results = display_yelp_fusion_results(results)
+        print(formatted_results)
+    else:
+        print("No results found or an error occurred.")
+    
+    # Test with different parameters
+    print("\nTesting with different parameters:")
+    cuisine = "Japanese"
+    location = "New York"
+    print(f"Searching for {cuisine} restaurants in {location}...")
+    results = search_yelp_fusion_restaurants(food_category=cuisine, location=location, yelp_api_key=api_key)
+    if results:
+        formatted_results = display_yelp_fusion_results(results)
+        print(formatted_results)
+    else:
+        print("No results found or an error occurred.")

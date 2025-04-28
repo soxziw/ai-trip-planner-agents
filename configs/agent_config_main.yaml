@@ -1,0 +1,6 @@
+# agent_config_main.yaml
+travel_planner_agents:
+  area_layer: !include area_layer.yaml
+  city_layer: !include city_layer.yaml
+  within_city_layer: !include within_city_layer.yaml
+  orchestrator: !include orchestrator.yaml
